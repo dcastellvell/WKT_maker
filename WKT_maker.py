@@ -21,20 +21,19 @@
  *                                                                         *
  ***************************************************************************/
 """
-from qgis.PyQt.QtCore import QSettings, QTranslator, QCoreApplication
-from qgis.PyQt.QtGui import QIcon
-from qgis.PyQt.QtWidgets import QAction
+from qgis.PyQt.QtCore import QSettings, QTranslator, QCoreApplication, Qt
+from qgis.PyQt.QtGui import QIcon, QGuiApplication
+from qgis.PyQt.QtWidgets import (
+    QAction, QMessageBox, QDialog, QVBoxLayout, QTextEdit, QPushButton
+)
+from qgis.utils import iface
+from qgis.core import QgsMessageLog, QgsMapLayerType
 
 # Initialize Qt resources from file resources.py
 from .resources import *
 # Import the code for the dialog
 from .WKT_maker_dialog import to_wktDialog
 import os.path
-
-from PyQt5.QtWidgets import QMessageBox, QDialog, QVBoxLayout, QTextEdit, QPushButton
-from PyQt5.Qt import QGuiApplication
-from qgis.utils import iface
-from qgis.core import QgsMessageLog, QgsMapLayerType
 
 class to_wkt:
     """QGIS Plugin Implementation."""
@@ -196,7 +195,7 @@ class to_wkt:
         # show the dialog
         self.dlg.show()
         # Run the dialog event loop
-        result = self.dlg.exec_()
+        result = self.dlg.exec()
         # See if OK was pressed
         if result:
             # Do something useful here - delete the line containing pass and
@@ -219,7 +218,7 @@ class to_wkt:
                 layout.addWidget(close_button)
 
                 dialog.setLayout(layout)
-                dialog.exec_()
+                dialog.exec()
 
             # script
             layer = iface.activeLayer()
